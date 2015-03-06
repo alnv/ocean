@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Test</title>
+	</head>
+	
+	<body>
+		<!--
+			application/x-www-form-urlencoded
+		-->	
+		<form method="post" action="user/save" enctype="multipart/form-data">
+			<input type="hidden" name="_method" value="put">
+			<input type="text" name="name" placeholder="Name">
+			<input type="email" name="email" placeholder="Email">
+			<input type="text" name="plz" placeholder="PLZ">
+			<input type="password" name="password">
+			<textarea name="area"></textarea>
+			<input type="file" name="file">
+			<input type="submit" value="Send">
+		</form>
+
+	</body>
+	
+</html>
