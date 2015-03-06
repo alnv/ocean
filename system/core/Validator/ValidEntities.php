@@ -82,9 +82,9 @@
 	}
 	
 	/**
-	* Return Cleaner 
-	* @return obj instace
-	*/ 	
+	 * Return Cleaner 
+	 * @return obj instace
+	 */ 	
 	public static function getInstance()
 	{
 		if(self::$instance === null){
