@@ -1,5 +1,19 @@
 <?php namespace Ocean;
+/*
+ *
+ * Ocean
+ * 
+ * Copyright 2015 Alexander Naumov
+ * 
+ * @license MIT
+ */	
 
+/**
+ * Class Database
+ * 
+ * @copyright Alexander Naumov
+ * @author Alexander Naumov	
+ */	
 class Database
 {
 	
@@ -11,7 +25,7 @@ class Database
 	private static $instance = null;
 	
 	/**
-	 *
+	 * start PDO Driver
 	 */
 	private static function getInstance()
 	{
@@ -39,13 +53,16 @@ class Database
 		
 	}
 	
+	/**
+	 * delete database instance
+	 */
 	public static function close()
 	{
 		self::$instance = null;
 	}
 	
 	/**
-	 *
+	 * call PDO methdos staticly example: Database::prepare('<sql str>');
 	 */	
 	public static function __callStatic($name, $args)
 	{	
