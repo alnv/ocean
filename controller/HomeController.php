@@ -11,9 +11,9 @@ class HomeController
 
 		$blog->cols = 'id as bid, authorID, title';
 		$user->cols = 'id, name, email';
+		//$user->limit = '2';
 		$user->joinid($blog, 'authorID');
 		$users = $user->find();
-		var_dump($users);
 		include 'views/layout/master.php';
 		
 	}
