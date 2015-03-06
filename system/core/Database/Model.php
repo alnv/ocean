@@ -1,50 +1,67 @@
 <?php namespace Ocean;
-	
+/*
+ *
+ * Ocean
+ * 
+ * Copyright 2015 Alexander Naumov
+ * 
+ * @license MIT
+ */	
+
+/**
+ * Class Model
+ *
+ * Database Mapping Object 
+ * @copyright Alexander Naumov
+ * @author Alexander Naumov	
+ */	
 class Model
 {
 	
 	/**
-	 *
+	 * current model id (Database::lastInsertId())
+	 * @var string
 	 */
 	protected $id;
 	 	
 	/**
-	 *
+	 * @var string
 	 */	
 	protected $timestamp_format;
 	
 	/**
-	 *
+	 * @var string
 	 */	
 	protected $cols = '*';
 	
 	/**
-	 *
+	 * @var mixed
 	 */	
 	protected $additionalCols = array();
 		
 	/**
-	 *
+	 * @var string
 	 */	
-	protected $where;
+	public $where;
 	
 	/**
-	 *
+	 * @var string
 	 */	
-	protected $limit;
+	public $limit;
 	
 	/**
-	 *
+	 * joins container for multiply joins strings
+ 	 * @var array
 	 */
 	protected $joins = array();
 	 
 	/**
-	 *
+	 * @var string
 	 */
 	protected $joinStr;
 	 
 	/**
-	 *
+	 * initialize the object
 	 */	
 	public function __construct()
 	{
@@ -53,15 +70,15 @@ class Model
 	}
 	
   	/**
-   	*
-   	*/
+   	 * close database method
+   	 */
   	public function __destruct()
   	{
 		Database::close();
   	} 
     
 	/**
-	 *
+	 * get custom attributes
 	 */
 	public function __get($key)
 	{
@@ -69,7 +86,7 @@ class Model
 	}
 	
 	/**
-	 *
+	 * allow fill the model with custom attributes
 	 */
 	public function __set($key, $value)
 	{
@@ -77,7 +94,8 @@ class Model
 	}
 	
 	/**
-	 *
+	 * creating magic method join<param>($modelObj, 'foreignkey')
+	 * $user->joinid($blog, 'authorID');
 	 */	
 	public function __call($method, $args)
 	{
@@ -93,7 +111,7 @@ class Model
 	}	
 	
 	/**
-	 *
+	 * remove item form model
 	 */
 	public function remove($query)
 	{
@@ -104,7 +122,7 @@ class Model
 	}	
 	
 	/**
-	 * 
+	 * update attributes
 	 */
  	public function update($query = '', $update = array())
 	{
@@ -120,12 +138,12 @@ class Model
 	}
 	
 	/**
-	 *
+	 * find items
 	 */
 	public function find()
 	{
 
-		$sql = $this->getSelect().' '.$this->getJoins().' '.$this->getWhere().';';
+		$sql = $this->getSelect().' '.$this->getJoins().' '.$this->getWhere().' '.$this->getLimit().';';
 		$statement = Database::prepare($sql);
 		$statement->execute();
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -168,7 +186,8 @@ class Model
 	}
 	
 	/**
-	 *
+	 * extend current model with created_at and updated_at cols
+	 * @return void
 	 */	
 	protected function extendSchema()
 	{
@@ -176,11 +195,12 @@ class Model
 			'created_at' => 'DATETIME',
 			'updated_at' => 'DATETIME',
 		);
+
 		$this->schema = array_merge($this->schema, $extend);
 	}
 	
 	/**
-	 * 
+	 * creating sql-inner-join string
 	 */
 	protected function join($args)
 	{
@@ -192,7 +212,7 @@ class Model
 	}
 	
 	/**
-	 *
+	 * getter
 	 */	
 	protected function getWhere()
 	{
@@ -206,7 +226,7 @@ class Model
 	}
 	
 	/**
-	 *
+	 * getter
 	 */	
 	protected function getLimit()
 	{
@@ -220,7 +240,7 @@ class Model
 	}
 	
 	/**
-	 *
+	 * create timestamp for update_at
 	 */	
 	public function setUpdateAt()
 	{
@@ -228,7 +248,7 @@ class Model
 	}
 	
 	/**
-	 *
+	 * creating sql-select string
 	 */	
 	private function getSelect()
 	{
@@ -236,7 +256,7 @@ class Model
 	}
 	
 	/**
-	 *
+	 * add joins sql-string to joins container
 	 */	
 	private function addJoin($joinStr)
 	{
@@ -290,7 +310,7 @@ class Model
 	}
 		
 	/**
-	 *
+	 * create timestamp for created_at
 	 */	
 	public function setCreatedAt()
 	{
@@ -298,7 +318,7 @@ class Model
 	}
 	
 	/**
-	 *
+	 * get all attributes
 	 */
 	protected function getValues()
 	{
@@ -313,7 +333,7 @@ class Model
 	}
 	
 	/**
-	 * 
+	 * init proberties if you use parameter
 	 */	
 	protected function initProperties($arr = array()){
 		
