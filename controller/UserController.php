@@ -25,13 +25,10 @@ class UserController
 		$user->password = $data['password'];
 		$user->insert();		
 		
-		
-		
 		$blog = new Blog();
 		$blog->title = 'Hallo '.$data['username'].'!';
 		$blog->authorID = $user->id;
 		$blog->insert();
-		
 		header("Location: http://www.ocean.dev");
 	
 	}
