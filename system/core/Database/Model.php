@@ -113,10 +113,10 @@ class Model
 	/**
 	 * remove item form model
 	 */
-	public function remove($query)
+	public function remove()
 	{
-		if($query !== '') $query = ' WHERE '.$query;
-		$statement = Database::prepare('DELETE FROM '.$this->table.''.$query.';');
+
+		$statement = Database::prepare('DELETE FROM '.$this->table.' '.$this->getWhere().';');
 		$statement->execute();
 	
 	}	
@@ -124,15 +124,14 @@ class Model
 	/**
 	 * update attributes
 	 */
- 	public function update($query = '', $update = array())
+ 	public function update($update = array())
 	{
 
-		if($query !== '') $query = ' WHERE '.$query;
 		$this->setUpdateAt();
 		$this->initProperties($update);
 		$model = $this->getValues();
 		$updateStr = Helper::assocToCustomStr($model);
-		$statement = Database::prepare('UPDATE '.$this->table.' SET '.$updateStr.$query.';');
+		$statement = Database::prepare('UPDATE '.$this->table.' SET '.$updateStr.$this->getWhere().';');
 		$statement->execute();
 		
 	}
@@ -181,7 +180,7 @@ class Model
 		
 		$cols = Helper::assocToCustomStr($schema);
 		$sql = 'CREATE TABLE IF NOT EXISTS '.$this->table.' ( '.$cols.' );';
-		Database::exec($sql);
+		return Database::exec($sql);
 	
 	}
 	
