@@ -16,27 +16,31 @@ $GLOBALS['routes'] = array(
 	),
 	
 	/**
-	 * Restful user 
+	 * Restful example
 	 */	
 	'userIndex' => array(
 		'method' => 'get',
-		'path' => '/user/:id',
+		'path' => '/user',
 		'controller' => 'UserController.index',
 	),
-	'userDelete' => array(
-		'method' => 'delete',
-		'path' => 'user/delete/:id',
-		'controller' => 'UserController.delete',
-	),
-	'userCreate' => array(
+	'createUser' => array(
 		'method' => 'post',
-		'path' => 'user/create',
+		'path' => '/user',
 		'controller' => 'UserController.create',
 	),
-	'userUpdate' => array(
+	'showUser' => array(
+		'method' => 'get',
+		'path' => '/user/:id',
+		'controller' => 'UserController.show',
+	),
+	'updateUser' => array(
 		'method' => 'put',
-		'path' => 'user/update/:id',
+		'path' => '/user/:id',
 		'controller' => 'UserController.update',
+	),
+	'deleteUser' => array(
+		'method' => 'delete',
+		'path' => '/user/:id',
+		'controller' => 'UserController.delete',
 	)
-	
 );
