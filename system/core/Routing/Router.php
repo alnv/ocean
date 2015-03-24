@@ -168,7 +168,7 @@ class Router
    	 */	
 	public function init()
 	{
-	
+		
 		$routes = $this->getRoutes();
 		$method = $this->urlMatcher->getMethod();
 
