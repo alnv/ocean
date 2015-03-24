@@ -89,28 +89,28 @@ class Request
 	}
 	
 	/**
-	 * @param string || mixed
+	 * @param mixed
 	 * @return mixed
 	 */	
 	public static function only($input)
 	{
 		
 		$rawValues = static::getValues();
-
+		
 		if( is_string($input) && isset( $rawValues[$input] ) ){
 			
 			$str = $rawValues[$input];
 			$str = static::getValidStr($str);
-			static::$values[$input] = $str;
+			return $str;
 			
 		}
 		
 		if(is_array($input)){		
 			
 			foreach($input as $key){
-		
-				static::$values = static::only($key);
-			
+				
+				static::$values[$key] = static::only($key);
+				
 			}
 		
 		}
