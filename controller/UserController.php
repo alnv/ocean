@@ -1,52 +1,194 @@
 <?php namespace Ocean;
-
+/**
+ * Filename == Classname !!!
+ */
 class UserController
 {
-	
-	public function index($param)
+
+	/**
+	 * get /user
+	 * show all user
+	 */
+	public function index()
 	{
+		/**
+		 * create table for my user
+		 */
 		$user = new User();
-		$blog = new Blog();
-		$user->cols = 'id as userID, name, email';
-		$blog->cols = 'id as blogID, title, created_at, updated_at';
-		$user->where = 'oc_user.id = '.$param['id'].'';
-		$user->joinid($blog, 'authorID');
-		$profile = $user->find();
-		var_dump($profile);
-	}
-	
-	public function create()
-	{
-		$data = Request::all();
 		
-		$user = new User();
-		$user->name = $data['username'];
-		$user->email = $data['email'];
-		$user->password = $data['password'];
-		$user->insert();		
+		/**
+		 * create user table [if not exist]
+		 */
+		$user->create();
+
+
+		/**
+		 * some methods and attributes you can work with
+		 * 
+		 * $user-where = 'name = "usermame"';
+		 * $user->limit = '0,5' #like sql start, max
+		 *
+		 * you can use joins
+		 *
+		 * $exampleBlog = new ExampleBlog();
+		 * $field = 'authorID';
+		 * $user->joinid($exampleBlog, $field);
+		 * syntax: $user->join<col> #<col> = your primary key in $user
+		 */
 		
-		$blog = new Blog();
-		$blog->title = 'Hallo '.$data['username'].'!';
-		$blog->authorID = $user->id;
-		$blog->insert();
-		header("Location: http://www.ocean.dev");
-	
+		/**
+		 * get a list of users
+		 */
+		$users = $user->find();
+
+		/**
+		 * load view
+		 */
+		include 'views/page/user.php';
 	}
 
-	public function delete($param)
+	/**
+	 * post /user
+	 * create new user
+	 */
+	public function create()
 	{
+		/**
+		 * get post data from form with Request class
+		 */
+		$input = Request::only(array('username', 'message'));
+
+		/**
+		 * create instance of User
+		 */
 		$user = new User();
-		$user->remove('id = '.$param['id'].'');
-		header("Location: http://www.ocean.dev");
+
+		/**
+         * fill user attributes
+         */
+		$user->username = $input['username'];
+		$user->message = $input['message'];
+
+		/**
+		 * insert new table with given attributes
+		 */
+		$user->insert();
+
+		/**
+		 *	Redirect back to user page
+		 */
+		header("Location: /user");
+
 	}
-	
+
+	/**
+	 * get /user/:id
+	 * get specific user
+	 */
+	public function show($param)
+	{
+		/**
+		 * get user id from param
+		 */
+		$userID = $param['id'];
+
+		/**
+		 * create instance of User
+		 */
+		$user = new User();
+
+		/**
+		 * get user with current id
+		 */
+		$user->where = 'id = '.$userID;
+		
+		/**
+		 * get user object
+		 */
+		$currentUser = $user->find()[0]; //get first object
+
+		/*
+		 * load view
+		 */
+		include 'views/page/user-profile.php';
+
+	}
+
+	/**
+	 * put /user/:id
+	 * update user
+	 */
 	public function update($param)
-	{
+	{	
+
+		/**
+		 * get post data from form with Request class
+		 */
+		$input = Request::only(array('username', 'message'));
+
+		/**
+		 * get user id from param
+		 */
+		$userID = $param['id'];
+
+		/**
+		 * create instance of User
+		 */
 		$user = new User();
-		$user->name = Request::get('name');
-		$user->update('id='.$param['id'].'');
-		header("Location: http://www.ocean.dev");
+
+		/**
+         * update user attributes
+         */
+		$user->username = $input['username'];
+		$user->message = $input['message'];
+
+		/**
+		 * select user
+		 */
+		$user->where = 'id = '.$userID;
+
+		/**
+		 * update user
+		 */
+		$user->update();
+
+		/**
+		 *	Redirect back to user page
+		 */
+		header("Location: /user");
 	}
-	
+
+	/**
+	 * delete /user/:id
+	 * delete user
+	 */
+	public function delete($param)
+	{	
+		/**
+		 * get user id from param
+		 */
+		$userID = $param['id'];
+
+		/**
+		 * create instance of User
+		 */
+		$user = new User();
+
+		/**
+		 * select user
+		 */
+		$user->where = 'id = "'.$userID.'"';
+
+		/**
+		 * remove user
+		 */
+		$user->remove();
+
+		/**
+		 *	Redirect back to user page
+		 */
+		header("Location: /user");
+	}
+
 }
 	
