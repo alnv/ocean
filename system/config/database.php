@@ -2,10 +2,19 @@
 
 $GLOBALS['database'] = array(
 	
+	/*
+	 * your current selected database
+	 */
 	'connected' => 'mysql',
 	
+	/**
+	 * your defined database connections
+	 */
 	'connections' => array(
-	
+		
+		/**
+		 * mysql database
+		 */
 		'mysql' => array(
 			
 			'driver' => 'mysql',
@@ -16,8 +25,14 @@ $GLOBALS['database'] = array(
 			
 		),
 		
+		/**
+		 * nicht getestet
+		 */
 		'sqlite' => array(),
 		
+		/**
+		 * nicht getestet
+		 */
 		'pgsql' => array()
 		
 	)
