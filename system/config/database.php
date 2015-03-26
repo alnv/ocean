@@ -3,12 +3,12 @@
 $GLOBALS['database'] = array(
 	
 	/*
-	 * your current selected database
+	 * selected database
 	 */
 	'connected' => 'mysql',
 	
 	/**
-	 * your defined database connections
+	 * defined databases
 	 */
 	'connections' => array(
 		
