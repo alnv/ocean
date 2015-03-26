@@ -16,7 +16,7 @@
 	    	}
 	    	.wrapper{
 	    		width: 90%;
-	    		max-width: 480px;
+	    		max-width: 520px;
 	    	}
 	    	a{
 	    		color: #2BAB15;
@@ -104,7 +104,8 @@
 	
 	<body>
 		<div class="wrapper">
-			<h1>Restful</h1>
+			<h1>Gästebuch</h1>
+			<p>Hinterlasse eine Nachricht</p>
 			<?php include 'views/form/createUser.php'; ?>
 			<a href="/">@zurück</a>
 			<div class="user-container">
